@@ -1,0 +1,30 @@
+name: CI
+on:
+  pull_request:
+    branches: [ main ]
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ["16.18.x"]
+    steps:
+      # 拉取代码
+      - name: checkout repo
+        uses: actions/checkout@3
+      # 下载pnpm
+      - name: use pnpm
+      - uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
+      # 下载node
+      - name: use Nodejs
+        uses: actions/setup-node@3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: lint
+        run: pnpm lint
+  
