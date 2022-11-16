@@ -1,0 +1,22 @@
+name: remote-ssh
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "some thing you want to input."
+        required: true
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            whoami
+            echo ${{ github.event.inputs.version }}
+            
