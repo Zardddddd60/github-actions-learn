@@ -35,8 +35,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
         with:
-          tag_name: v${{steps.version.outputs.value}}
-          release_name: v${{steps.version.outputs.value}}
+          tag_name: v${{ steps.version.outputs.value }}
+          release_name: v${{ steps.version.outputs.value }}
           draft: false
           prerelease: false
       - name: Upload release
@@ -49,3 +49,12 @@ jobs:
           asset_path: ./assets.zip
           asset_name: assets.zip
           asset_content_type: application/zip
+      - name: Upload to server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+          SOURCE: "dist/"
+          TARGET: "/data/www"
+          ARGS: "-avzr --delete"
+          REMOTE_HOST: ${{ secrets.SERVER_IP }}
+          REMOTE_USER: ${{ secrets.SERVER_USER }}

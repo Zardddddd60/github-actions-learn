@@ -1,10 +1,19 @@
-import React, { useState } from 'react'
+/* eslint disable */
+import React, { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
 function App(): React.ReactElement {
   const [count, setCount] = useState(0)
-
+  useEffect(() => {
+    fetch('http://juejin.alibaba-inc.com/tag_api/v1/query_category_briefs').then(res => {
+      return res.json()
+    }).then(res => {
+      console.log(res)
+    }).catch(e => {
+      console.log(e)
+    })
+  }, [])
   return (
     <div className="App">
       <div>
