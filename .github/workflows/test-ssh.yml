@@ -18,5 +18,4 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             whoami
-            echo ${{ github.event.inputs.version }}
-            
+
